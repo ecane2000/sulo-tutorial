@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="https://w3id.org/ontostart/pizza/"
+         xmlns="https://w3id.org/ontostart/pizza/">
+
+<owl:Ontology rdf:about="https://w3id.org/ontostart/pizza">
+  <owl:imports rdf:resource="https://w3id.org/sulo"/>
+</owl:Ontology>
+
+<owl:Class rdf:about="FoodMaterial">
+  <rdfs:subClassOf rdf:resource="https://w3id.org/sulo/SpatialObject"/>
+  <rdfs:label xml:lang="en">food material</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A food material is a spatial object that is intended for consumption as food.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="Pizza">
+  <rdfs:subClassOf rdf:resource="FoodMaterial"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="https://w3id.org/sulo/hasDirectPart"/>
+      <owl:onClass rdf:resource="PizzaCrust"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="en">pizza</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A pizza is a food material minimally consisting of a pizza crust (baked dough) and optionally topped with 
+                    tomatoes or tomato sauce, cheese, and often various other ingredients (such as anchovies, mushrooms, onions, olives, 
+                    vegetables, meat, etc.) baked at a high temperature.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="PizzaCrust">
+  <rdfs:subClassOf rdf:resource="FoodMaterial"/>
+  <rdfs:label xml:lang="en">pizza crust</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A pizza crust is a food material resulting from the cooking of a dough 
+                    and forms the base of a pizza upon which sauce and toppings are added.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="PizzaSauce">
+  <rdfs:subClassOf rdf:resource="FoodMaterial"/>
+  <rdfs:label xml:lang="en">pizza sauce</rdfs:label>
+  <rdfs:comment xml:lang="en">A pizza sauce is a food material that is spread on a pizza crust 
+                        and serves as the base for additional toppings.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="Spiciness">
+  <rdfs:subClassOf rdf:resource="https://w3id.org/sulo/Quality"/>
+  <rdfs:label xml:lang="en">spiciness</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Spiciness is a quality that represents the perceived heat or pungency of a food material.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="SpicyHot">
+  <rdfs:subClassOf rdf:resource="Spiciness"/>
+  <rdfs:label xml:lang="en">spicy hot</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A high level of spiciness causing intense heat sensation.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="SpicyMedium">
+  <rdfs:subClassOf rdf:resource="Spiciness"/>
+  <rdfs:label xml:lang="en">spicy medium</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A moderate level of spiciness.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="SpicyMild">
+  <rdfs:subClassOf rdf:resource="Spiciness"/>
+  <rdfs:label xml:lang="en">spicy mild</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A low level of spiciness with minimal heat sensation.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="SpicySalami">
+  <rdfs:subClassOf rdf:resource="FoodMaterial"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="https://w3id.org/sulo/hasFeature"/>
+      <owl:someValuesFrom>
+        <owl:Class>
+          <owl:unionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="SpicyHot"/>
+            <rdf:Description rdf:about="SpicyMedium"/>
+          </owl:unionOf>
+        </owl:Class>
+      </owl:someValuesFrom>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="en">spicy salami</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A salami with a hot or medium spiciness quality.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="SpicySalamiPizza">
+  <rdfs:subClassOf rdf:resource="Pizza"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="Pizza"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="https://w3id.org/sulo/hasDirectPart"/>
+          <owl:onClass rdf:resource="PizzaSauce"/>
+          <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="https://w3id.org/sulo/hasDirectPart"/>
+          <owl:onClass rdf:resource="SpicySalami"/>
+          <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="https://w3id.org/sulo/hasDirectPart"/>
+          <owl:allValuesFrom>
+            <owl:Class>
+              <owl:unionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="SpicySalami"/>
+                <rdf:Description rdf:about="PizzaSauce"/>
+              </owl:unionOf>
+            </owl:Class>
+          </owl:allValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label xml:lang="en">spicy salami pizza</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="SpicyPizza">
+  <rdfs:subClassOf rdf:resource="Pizza"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="Pizza"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="https://w3id.org/sulo/hasDirectPart"/>
+          <owl:someValuesFrom>
+            <owl:Restriction>
+              <owl:onProperty rdf:resource="https://w3id.org/sulo/hasFeature"/>
+              <owl:someValuesFrom>
+                <owl:Class>
+                  <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="SpicyHot"/>
+                    <rdf:Description rdf:about="SpicyMedium"/>
+                  </owl:unionOf>
+                </owl:Class>
+              </owl:someValuesFrom>
+            </owl:Restriction>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label xml:lang="en">spicy pizza</rdfs:label>
+</owl:Class>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="SpicyHot"/>
+    <rdf:Description rdf:about="SpicyMedium"/>
+    <rdf:Description rdf:about="SpicyMild"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>
